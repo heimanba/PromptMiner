@@ -1,175 +1,77 @@
-# 🚀 PromptMiner：AI Prompt 的瑞士军刀，让优质 Prompt 触手可及
+# 🚀 PromptMiner：一个下午实现的开源工具，将cURL命令无缝转换为可交互Prompt工作台
 
-> **一键提取、编辑、测试别人分享的 AI Prompt，支持 OpenAI、DeepSeek、Claude、通义千问等主流 AI 平台**
+> 引言： "在AI的淘金热中，一个绝妙的Prompt就是一块熠熠生辉的金块。但我们这些‘淘金者’，却总是在‘矿场’（浏览器开发者工具）里，用最原始的工具，干着最辛苦的活。
+>
 
-在 AI 时代，一个好的 Prompt 往往能决定 AI 输出的质量。你是否遇到过这样的场景：
+灵感往往来源于一个惊艳的AI交互效果——可能来自一个产品演示，或是一张在社交媒体上广为流传的截图。为了复现或学习它，我们最直接的方式就是获取其API请求的cURL命令。
 
-- 📱 在社交媒体上看到别人分享的神级 Prompt 效果截图，却无法直接使用
-- 🔍 想要快速测试和调优网上找到的 Prompt，但需要手动复制粘贴各种参数
-- 🛠️ 希望能够可视化编辑 Prompt 内容，而不是在命令行中反复调试
-- 🔄 需要在不同 AI 平台之间快速切换测试同一个 Prompt
+然而，当您将这条命令粘贴到文本编辑器时，灵感的火花常常会被现实浇灭。从这段复杂的文本中手动提取核心的messages内容、模型参数（如model, temperature）等信息，不仅过程繁琐、易错，还极大地降低了迭代和测试的效率。开发者需要手动清理格式、在不同模型的API规范间转换，这个过程消耗了大量本可用于Prompt工程本身的时间和精力。
 
-**PromptMiner** 正是为解决这些痛点而生的开源工具！
+### 一个下午的“Vibe”，一个工具的诞生
+这个工具的诞生，没有冗长的会议，没有复杂的PRD。只有一个开发者（我）在又一次手动“扒”Prompt到抓狂后，拍案而起：“够了！这事儿必须自动化！”
 
-## ✨ 核心亮点
+这就是PromptMiner的起点，一个纯粹由“Vibe Coding”驱动的项目。我打开代码编辑器，目标只有一个：创造一个极致纯粹的工具，能将那些混杂的`curl`“矿石”，瞬间提纯成闪闪发光的Prompt“黄金”。
 
-### 🎯 智能 curl 解析，一键提取 Prompt
-只需将浏览器开发者工具中复制的 curl 命令粘贴进来，PromptMiner 就能自动识别并提取：
-- 完整的对话历史（system、user、assistant 消息）
-- API 参数配置（temperature、max_tokens、model 等）
-- 请求头信息和认证方式
-- 自动识别 API 提供商（OpenAI、DeepSeek、Claude、通义千问等）
+![](https://intranetproxy.alipay.com/skylark/lark/0/2025/png/99204/1754054446261-ea4e0a9f-fa95-4529-90a4-f9a6a3539c7c.png)
 
-### 🎨 可视化编辑界面，告别命令行
-- **直观的消息管理**：可视化查看和编辑每条消息，支持角色切换
-- **实时 Token 统计**：自动计算每条消息和总体的 Token 消耗
-- **参数调节面板**：滑块式调节 temperature、max_tokens 等参数
-- **语法高亮显示**：清晰展示 JSON 格式的 Prompt 内容
+### 核心工作流程
+PromptMiner的使用流程被设计得尽可能简化：
 
-### 🧪 一键 API 测试，即时验证效果
-- **流式输出支持**：实时查看 AI 生成过程，就像在官方界面一样
-- **多平台兼容**：支持 OpenAI、DeepSeek、Claude、通义千问等主流 API
-- **详细结果统计**：显示响应时间、Token 消耗、完成原因等信息
-- **错误诊断**：清晰的错误提示，帮助快速定位问题
+在任何AI应用的网页上，打开开发者工具（F12），定位到目标网络请求。  
+右键选择 Copy > Copy as cURL。  
+打开PromptMiner应用，将复制的内容粘贴到输入框。
 
-### 🔒 隐私安全，本地处理
-- **零数据上传**：所有解析和编辑都在本地浏览器中完成
-- **API 密钥安全**：密钥仅在内存中使用，不会被存储或传输
-- **开源透明**：完整源码开放，可自行部署和审计
+![](https://intranetproxy.alipay.com/skylark/lark/0/2025/gif/99204/1754052355718-5687426c-4d56-4a58-a97a-f3fea217d0da.gif)
 
-## 🎬 使用场景演示
+完成粘贴后，PromptMiner会自动解析cURL命令中的所有组件，并将其呈现为一个功能完备的可视化界面。
 
-### 场景一：快速复现网红 Prompt
-```bash
-# 1. 从社交媒体看到某个 AI 对话效果很好
-# 2. 要求作者分享 curl 命令
-# 3. 复制粘贴到 PromptMiner
-curl 'https://api.deepseek.com/v1/chat/completions' \
-  -H 'authorization: Bearer YOUR_API_KEY' \
-  --data-raw '{"model":"deepseek-reasoner","messages":[...]}'
+### 主要功能特性
+PromptMiner不仅是一个解析器，更是一个集成了编辑、测试和管理功能的Prompt工作台。
 
-# 4. 一键解析，立即看到完整的 Prompt 结构
-# 5. 输入自己的 API 密钥，测试效果
-```
+🎯 核心魔术：智能`curl`解析，一键提取  
+只需粘贴，它就能像一位经验丰富的“矿工”，自动识别并提取出所有宝贵信息：
 
-### 场景二：Prompt 工程师的调优工作流
-1. **导入基础 Prompt**：从 curl 命令快速导入
-2. **可视化编辑**：修改 system prompt，调整对话历史
-3. **参数调优**：实时调节 temperature、top_p 等参数
-4. **A/B 测试**：快速切换不同版本进行对比
-5. **效果验证**：一键测试，查看输出质量
++ 完整的对话历史（System, User, Assistant角色分明）
++ 模型与参数（`model`, `temperature`, `max_tokens`等）
++ API提供商（自动识别OpenAI, DeepSeek, Claude, 通义千问等）
 
-### 场景三：团队协作与分享
-- **标准化分享**：团队成员可以通过 curl 命令精确分享 Prompt
-- **版本管理**：保存不同版本的 Prompt 配置
-- **跨平台测试**：同一个 Prompt 在不同 AI 平台上的效果对比
+🎨 可视化创作：告别命令行，拥抱直觉
 
-## 🛠️ 技术特色
++ 直观编辑： 像聊天一样管理对话消息，随时增删改查。
++ 参数滑块： 拖动滑块就能实时调节`temperature`等参数，所见即所得。
++ 实时Token统计： 精打细算，每一分钱都花在刀刃上。
 
-### 强大的解析引擎
-- **智能 curl 解析**：支持复杂的 bash 转义字符和多行格式
-- **多格式兼容**：自动适配不同 AI 平台的 API 格式差异
-- **容错处理**：对格式不规范的 curl 命令也能尽力解析
+🧪 一键试射：即时验证，光速迭代
 
-### 现代化技术栈
-- **Next.js 15**：最新的 React 全栈框架，性能卓越
-- **TypeScript**：完整的类型安全，开发体验优秀
-- **Tailwind CSS + Radix UI**：现代化的 UI 设计系统
-- **AI SDK**：统一的 AI API 调用接口，支持多平台
++ 多平台兼容： 输入你的API Key，就能在同一个界面，用同一个Prompt测试不同大模型的效果。
++ 流式输出： 实时观看AI的“思考”过程，体验与官方一致。
++ 精准诊断： 清晰的错误提示和结果统计，帮你快速定位问题。
 
-### 优秀的用户体验
-- **响应式设计**：完美适配桌面和移动设备
-- **实时反馈**：操作即时响应，无需等待
-- **智能提示**：详细的错误信息和使用指导
-- **键盘快捷键**：提升高频用户的操作效率
+🔒 本地化处理与数据安全
 
-## 📊 项目数据
++ 100%本地处理： 所有解析和API请求都在你的浏览器中完成，零数据上传。
++ API密钥安全： 你的密钥仅用于当次请求，绝不存储。
++ 完全开源： 代码透明，接受社区所有人的审计。
 
-- **🌟 GitHub Stars**：持续增长中
-- **📦 技术栈**：Next.js + TypeScript + Tailwind CSS
-- **🔧 依赖管理**：精简的依赖树，快速安装
-- **📱 兼容性**：支持所有现代浏览器
-- **🚀 部署方式**：支持 Vercel、Netlify 等平台一键部署
+### 为你设计的使用场景
+无论你是谁，PromptMiner都能优化你的工作流。
 
-## 🎯 目标用户
++ 对于AI爱好者：复现灵感，从截图到你的工作台
+    1. 从社交媒体拿到大神分享的`curl`命令。
+    2. 粘贴到PromptMiner。
+    3. 输入你的API Key，一键复现，甚至开始自己的微调和魔改！
++ 对于Prompt工程师：专业打磨，效率倍增
+    1. 用`curl`导入基础Prompt，快速建立工作区。
+    2. 可视化编辑System Prompt，调节参数进行A/B测试。
+    3. 在不同平台（如Claude 3 vs GPT-4o）间快速切换，对比输出质量，找到最优解。
++ 对于开发者与团队：标准化协作，无缝衔接
+    1. 团队成员间用`curl`命令作为“标准交付物”，精确分享和复现问题。
+    2. 在将AI集成到应用前，用PromptMiner快速验证API可行性。
 
-### AI 爱好者
-- 想要快速尝试网上分享的优质 Prompt
-- 希望有一个简单易用的 Prompt 测试工具
+#### 项目地址
+PromptMiner旨在将创造力从繁琐的重复劳动中解放出来。我们邀请您试用，并期待您的反馈。
 
-### Prompt 工程师
-- 需要专业的 Prompt 开发和调优工具
-- 要求高效的工作流和版本管理
+如果您认为这个工具解决了您的实际问题，欢迎访问我们的GitHub仓库并点亮Star，这是对我们工作的最大支持。
 
-### 开发者
-- 正在集成 AI 功能到自己的应用中
-- 需要快速验证不同 AI 平台的效果
+GitHub仓库: [https://github.com/heimanba/PromptMiner](https://github.com/heimanba/PromptMiner)
 
-### 企业团队
-- 需要标准化的 Prompt 分享和协作方式
-- 要求数据安全和私有化部署
-
-## 🚀 快速开始
-
-### 在线体验
-访问 [PromptMiner 在线版本](https://your-domain.com) 立即开始使用
-
-### 本地部署
-```bash
-# 克隆项目
-git clone https://github.com/heimanba/PromptMiner.git
-
-# 安装依赖
-cd PromptMiner
-npm install
-
-# 启动开发服务器
-npm run dev
-
-# 访问 http://localhost:3000
-```
-
-### Docker 部署
-```bash
-# 构建镜像
-docker build -t promptminer .
-
-# 运行容器
-docker run -p 3000:3000 promptminer
-```
-
-## 🌟 社区反馈
-
-> "终于有一个工具能让我快速测试 Twitter 上看到的那些神级 Prompt 了！" 
-> —— AI 研究员 @张三
-
-> "作为 Prompt 工程师，这个工具大大提升了我的工作效率，特别是可视化编辑功能。"
-> —— 某 AI 公司 Prompt 工程师
-
-> "开源、安全、易用，正是我们团队需要的 Prompt 协作工具。"
-> —— 某创业公司 CTO
-
-
-## 🤝 参与贡献
-
-PromptMiner 是一个完全开源的项目，我们欢迎所有形式的贡献：
-
-- **🐛 Bug 报告**：发现问题请提交 Issue
-- **💡 功能建议**：有好想法请在 Discussions 中分享
-- **🔧 代码贡献**：欢迎提交 Pull Request
-- **📖 文档改进**：帮助完善使用文档和教程
-- **🌍 国际化**：支持更多语言版本
-
-### 贡献者福利
-- 在项目 README 中展示贡献者头像
-- 优先体验新功能
-- 参与项目发展方向讨论
-- 获得开源贡献证明
-
----
-
-**PromptMiner** - 让每一个优质 Prompt 都能被轻松复现和优化！
-
-立即访问 [GitHub 仓库](https://github.com/heimanba/PromptMiner) 给我们一个 ⭐，开始你的 AI Prompt 探索之旅！
-
-#AI #Prompt #OpenSource #NextJS #TypeScript #PromptEngineering
