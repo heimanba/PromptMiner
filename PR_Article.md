@@ -21,7 +21,7 @@ PromptMiner的使用流程被设计得尽可能简化：
 右键选择 Copy > Copy as cURL。  
 打开PromptMiner应用，将复制的内容粘贴到输入框。
 
-![](https://intranetproxy.alipay.com/skylark/lark/0/2025/gif/99204/1754052355718-5687426c-4d56-4a58-a97a-f3fea217d0da.gif)
+![](https://img.alicdn.com/imgextra/i3/O1CN012L9egi1nhTKfQnnhc_!!6000000005121-2-tps-3250-1620.png)
 
 完成粘贴后，PromptMiner会自动解析cURL命令中的所有组件，并将其呈现为一个功能完备的可视化界面。
 
